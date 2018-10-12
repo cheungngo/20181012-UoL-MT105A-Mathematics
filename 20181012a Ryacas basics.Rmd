@@ -1,0 +1,141 @@
+---
+title: "20181012a Ryacas basics"
+author: "cheungngo"
+date: "October 12, 2018"
+output: word_document
+---
+
+```{r, message=FALSE}
+library(Ryacas)
+```
+
+## Common functions in Ryacas
+
+###
+
+### yacas()
+
+```{r}
+a = yacas(expression(x^2+1))
+b = expression(x^2+1)
+class(a)
+class(b)
+```
+
+###
+
+### Eval()
+
+```{r}
+a = yacas(expression(x^2+1))
+Eval(a,list(x=9))
+```
+
+```{r}
+Eval(a,list(x=c(1:9)))
+```
+
+###
+
+### yacas expressions
+
+```{r}
+# i.e. the quotation ''
+# inside the quotation would be the expressions which is considered non-proper R expressions
+d = yacas('D(x)Sin(x)')
+print(d)
+```
+
+###
+
+### Sym()
+
+```{r}
+x = Sym('x') # remember the quotation
+x + 10 # operations on Sym Objects directly without yacas()
+```
+
+```{r}
+# One can apply sin, cos, tan, deriv, integrate and other functions to Sym objects
+deriv(2*x^2,x)
+```
+
+###
+
+## Simple Yacas calculations
+
+###
+
+### Set() or n:=
+#### For global variables
+
+```{r}
+yacas('n:=Cos(x)')
+yacas('n')
+yacas('n:=n+n')
+yacas('Set(m,Sin(x))')
+yacas('m')
+yacas('m+m')
+# Remerber the global variables cannot be printed
+```
+
+### Further application for Set()
+#### assuming we would like to calculate area = pi * r^2
+
+```{r}
+pi = Sym('pi')
+r = Sym('r')
+# Suppose r = 2
+Set(pi,3.14)
+Set(r,2)
+pi * r^2
+```
+
+###
+
+### Clear()
+#### Note that after clearing a variable (with both Set and Sym applied), the Sym would remain
+
+```{r}
+pi
+Clear(pi)
+pi
+```
+
+###
+
+### N()
+#### Returning the exact value
+#### (otherwise it would remain a rational number)
+
+```{r}
+yacas('9/5')
+yacas('N(9/5)')
+```
+
+```{r}
+# precision in N()
+yacas('N(Exp(1),5)')
+```
+
+###
+
+### %
+#### Results from the previous line
+
+```{r}
+yacas('(1+x)^3')
+yacas('%')
+k = Sym('%')
+k
+```
+
+###
+
+### PrettyForm()
+
+```{r}
+yacas('%')
+yacas('PrettyForm(%)')
+```
+
