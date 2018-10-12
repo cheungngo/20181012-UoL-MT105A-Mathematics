@@ -1,0 +1,43 @@
+---
+title: "20181013a MT105A 02 Summations and Products"
+author: "cheungngo"
+date: "October 13, 2018"
+output: word_document
+---
+
+
+```{r,message=FALSE}
+library(Ryacas)
+```
+
+### Summation in R
+
+Suppose that x1 = 1; x2 = 3; x3 = -1; x4 = 5
+
+Calculate the summation of x^2 from i=1 to i=4
+
+```{r}
+i = c(1,3,-1,5)
+x = Sym('x')
+x2 = Eval(x^2,list(x=i[1:4]))
+print(x2)
+sum(x2)
+```
+
+###
+
+### Products in R
+
+Now x1 = 2, x2 = 9, x3 = 5, x4 = 3
+
+Calculate the products of x^2 + x - 1 from i=1 to i=4
+
+```{r}
+i = c(2,9,5,3)
+x = Sym('x')
+f = x^2 + x - 1
+fx = Eval(f, list(x=i[1:4]))
+print(fx)
+prod(fx)
+```
+
