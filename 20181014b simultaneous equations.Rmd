@@ -1,0 +1,48 @@
+---
+title: "20181014b simultaneous equations"
+author: "cheungngo"
+date: "October 14, 2018"
+output: word_document
+---
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+### Solve()
+
+Let y = 2*x - 1;  
+and y  = x + 2
+
+```{r}
+y = Sym('y')
+x = Sym('x')
+Solve(List(2*x - 1 == y, x + 2 == y), List(x,y))
+```
+
+```{r}
+# Plotting the equations
+plotFun(2*x - 1 ~ x,xlim = c(0,6))
+plotFun(x + 2 ~ x,xlim = c(0,6), add = T) # add=T for the added one
+```
+
+
+### A more complicated example
+
+Let:  
+x + 2*y + 7*z = 1  
+3*x + 2*y + 2*z = 7  
+-2*x + 3*y + z = 7  
+
+```{r}
+y = Sym('y')
+x = Sym('x')
+z = Sym('z')
+Solve(List(x + 2*y + 7*z == 1,
+           3*x + 2*y + 2*z == 7,
+           -2*x + 3*y + z == 7), 
+      List(x, y, z))
+N('%')
+```
+
