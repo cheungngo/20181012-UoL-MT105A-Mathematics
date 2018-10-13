@@ -1,0 +1,52 @@
+---
+title: "20181014a quadratic and polynomial"
+author: "cheungngo"
+date: "October 14, 2018"
+output: word_document
+---
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+### Quadratic equations
+
+Let y = x^2 - 6x + 5
+Find the root 
+
+```{r}
+x = Sym('x')
+f = Sym(x^2-6*x+5)
+yacas(Solve(f == 0,x)) # No '' within yacas (already Sym)
+```
+
+```{r}
+# plotting the function
+f = makeFun(x^2-6*x+5~x)
+plotFun(f(x)~x,xlim = c(0,6))
+```
+
+```{r}
+# One can also factorize the equation for a better presentation
+yacas('Factor(x^2-6*x+5)')
+```
+
+
+### Polynomial functions
+
+Let y = x*3 + 4*x^2 + 3x
+Solve x when y = 0
+
+```{r}
+x = Sym('x')
+f = Sym(x*3 + 4*x^2 + 3*x)
+yacas(Factor(f)) # Factorized function
+yacas(Solve(f==0,x))
+```
+
+```{r}
+fx = makeFun(x*3 + 4*x^2 + 3*x~x)
+plotFun(fx(x)~x,xlim = c(-3,3))
+```
+
