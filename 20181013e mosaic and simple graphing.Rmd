@@ -1,0 +1,56 @@
+---
+title: "20181013e mosaic and simple graphing"
+author: "cheungngo"
+date: "October 13, 2018"
+output: word_document
+---
+
+```{r,message=FALSE}
+library(mosaic)
+library(Ryacas)
+```
+
+### makeFun()
+
+Let f = x+3
+
+```{r}
+f = makeFun(x+3~x)
+f
+```
+
+### Composite functions in mosaic
+
+Suppose f(x) = x+1, g(x) = x^4;  
+Now to find the composite function g(f(x))
+
+```{r}
+f = makeFun(x+1~x)
+g = makeFun(x^4~x)
+x = Sym('x')
+g(x=x+1) # g(f(x))
+f(x=x^4) # f(g(x))
+```
+
+And this would be easier than just using Ryacas
+
+### plotFun()
+
+Let f = x+3 again
+
+```{r}
+f = makeFun(x+3~x)
+plotFun(f(x)~x, x.lim=c(-5,5))
+```
+
+### what about a composition function
+
+```{r}
+g = makeFun(x^4~x)
+h = g(x=x+1) # f(x) = x+1
+h # expression((x + 1)^4)
+# You may just need to copy and paste the expression (otherwise quite clumpsy)
+h = makeFun((x + 1)^4~x)
+plotFun(h(x)~x,x.lim=c(-100,100))
+```
+

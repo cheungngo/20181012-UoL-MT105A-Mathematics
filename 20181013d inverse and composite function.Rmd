@@ -1,0 +1,37 @@
+---
+title: "20181013d inverse and composite function"
+author: "cheungngo"
+date: "October 13, 2018"
+output: word_document
+---
+
+```{r,echo=FALSE,message=FALSE}
+library(Ryacas)
+```
+
+### Inverse function
+
+Suppose f(x) = x/(1+x)
+What would be the inverse function
+
+```{r}
+yacas('Solve(x/(1+x)==y,x)')
+```
+
+### 
+
+### Composite function
+
+Suppose f(x) = x+1, g(x) = x^4;  
+Now to find the composite function g(f(x))
+
+```{r}
+x = Sym('x')
+gx = function(x) {
+  yacas(Eval(x^4),list(x=x))
+}
+fx = x+1 # Just plain, no brackets
+gx(fx) # No 'yacas'
+Expand(gx(fx))
+```
+
