@@ -20,18 +20,19 @@ yacas('Solve(x/(1+x)==y,x)')
 
 ### 
 
-### Composite function
+### Composite functions in mosaic
 
 Suppose f(x) = x+1, g(x) = x^4;  
 Now to find the composite function g(f(x))
 
-```{r}
-x = Sym('x')
-gx = function(x) {
-  yacas(Eval(x^4),list(x=x))
-}
-fx = x+1 # Just plain, no brackets
-gx(fx) # No 'yacas'
-Expand(gx(fx))
+```{r,message=FALSE}
+library(mosaic)
 ```
 
+```{r}
+f = makeFun(x+1~x)
+g = makeFun(x^4~x)
+x = Sym('x')
+g(x=x+1) # g(f(x))
+f(x=x^4) # f(g(x))
+```
