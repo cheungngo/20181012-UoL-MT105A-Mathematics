@@ -1,0 +1,32 @@
+---
+title: "20181015b MT105A 03 Definition of derivatives"
+author: "cheungngo"
+date: "October 15, 2018"
+output: word_document
+---
+
+### Considering an instantaneous change h
+delta y == f(x+h) - f(x)  
+delta x == (x+h) - x
+f'(x) == delta y / delta x == (f(x+h) - f(x)) / h
+
+```{r, message=FALSE}
+library(mosaic)
+library(Ryacas)
+```
+
+### Suppose f(x) == x^2; find f'(x) using the first principle
+
+```{r}
+x = Sym('x')
+h = Sym('h')
+fx = makeFun(x^2~x)
+f.x = Simplify((Expand(fx(x+h))-fx(x))/h)
+f.x
+```
+
+```{r}
+# Verifying the answer
+deriv(x^2,x)
+```
+
