@@ -1,0 +1,73 @@
+---
+title: "20181015a trigonometrical functions"
+author: "cheungngo"
+date: "October 15, 2018"
+output: word_document
+---
+
+```{r, message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+### sin(x)^2+cos(x)^2 == 1
+
+```{r}
+x = Sym('x')
+f1 = makeFun(sin(x)^2+cos(x)^2~x)
+plotFun(f1(x)~x,ylim = c(-2,2))
+```
+
+```{r}
+i = seq(-3.14,3.14,0.01)
+mean(sapply(i,function(i){1-f1(i)}))
+```
+
+### 
+
+### sin(2x) == 2*sin(x)*cos(x)
+
+```{r}
+f2 = makeFun(sin(2*x)~x)
+f3 = makeFun(2*sin(x)*cos(x)~x)
+mean(sapply(i,function(i) {f2(i)-f3(i)}))
+```
+
+```{r}
+Int_f3 = Integrate(2*sin(x)*cos(x),x)
+Int_f3
+deriv(Int_f3,x)
+```
+
+```{r}
+# to prove sin(2*x) == -sin(-2 * x)
+f4 = makeFun(-sin(-2 * x)~x)
+mean(sapply(i, function(i) {f2(i)-f4(i)}))
+```
+
+###
+
+### cos(2*x) == cos(x)^2 - sin(x)^2
+
+```{r}
+f5 = makeFun(cos(2*x)~x)
+f6 = makeFun(cos(x)^2 - sin(x)^2 ~x)
+mean(sapply(i,function(i) {f5(i)-f6(i)}))
+```
+
+```{r}
+Int_f6 = Integrate(cos(x)^2 - sin(x)^2, x)
+Int_f6
+deriv(Int_f6,x)
+```
+
+```{r}
+# to prove cos(-2*x) == cos(2*x)
+f7 = makeFun(cos(-2 * x)~x)
+mean(sapply(i,function(i) {f5(i)-f7(i)}))
+```
+
+combining:  
+cos(2*x) == cos(x)^2 - sin(x)^2 &   
+sin(x)^2 + cos(x)^2 == 1  
+We can get cos(2*x) == 2*cos(x)^2 -1 or 1 - 2*sin(x)^2
