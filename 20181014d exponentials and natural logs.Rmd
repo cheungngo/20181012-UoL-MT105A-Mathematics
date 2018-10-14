@@ -1,0 +1,23 @@
+---
+title: "20181014d exponentials and natural logs"
+author: "cheungngo"
+date: "October 14, 2018"
+output: word_document
+---
+
+```{r, message=FALSE}
+library(mosaic)
+```
+
+### Exponentials
+
+```{r}
+plotFun(exp(x)~x,xlim = c(170,200))
+```
+
+### Natural log
+
+```{r}
+plotFun(logb(x,base = exp(1))~x)
+```
+

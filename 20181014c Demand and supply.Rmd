@@ -1,0 +1,72 @@
+---
+title: "20181014c Demand and supply"
+author: "cheungngo"
+date: "October 14, 2018"
+output: word_document
+---
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+### using Solve()
+
+demand: q = 250 - 4*p - p^2
+supply: q = 2*p^2 - 3*p - 40
+
+```{r}
+p = Sym('p')
+q = Sym('q')
+Solve(List(250 - 4*p - p^2 == q, 
+           2*p^2 - 3*p - 40 == q),
+      List(p,q))
+```
+
+Not able to solve in this way
+
+### finding p first
+
+for q = q, 250 - 4*p - p^2 = 2*p^2 - 3*p - 40  
+Therefore, 3*p^2 + p - 290 = 0  
+
+```{r}
+Solve(3*p^2 + p - 290 == 0,p)
+```
+
+And we can find p == -10 (impossible) or p == 29/3  
+Substitute p == 29/3 into the equation
+
+```{r}
+qd = makeFun(250 - 4*p - p^2 ~ p)
+qs = makeFun(2*p^2 - 3*p - 40 ~ p)
+qd(29/3)
+qs(29/3)
+```
+
+### sketching the curves
+
+```{r}
+plotFun(qd(p)~p,xlim = c(0,20))
+```
+
+```{r}
+plotFun(qs(p)~p,xlim = c(0,20),add = T)
+```
+
+### What about p against q
+
+```{r}
+Solve(250 - 4*p - p^2 == q, p)
+Solve(2*p^2 - 3*p - 40 == q, p)
+```
+
+```{r}
+# Only plotting the positve functions
+plotFun(-((4 - root(16 - -4 * (250 - q), 2))/2) ~ q, xlim = c(-200,200), ylab = 'Price', xlab = 'Quantity')
+```
+
+```{r}
+plotFun((root(9 - -8 * (q + 40), 2) + 3)/4 ~ q, xlim = c(-200,200), add = T)
+```
+
