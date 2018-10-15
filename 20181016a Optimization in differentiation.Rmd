@@ -1,0 +1,91 @@
+---
+title: "20181016a Optimization in differentiation"
+author: "cheungngo"
+date: "October 16, 2018"
+output: word_document
+---
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+
+### Critical points
+
+f'(x) > 0 => increasing value  
+f'(x) < 0 => decreasing value  
+f'(x) = 0 => min / max value  
+
+f''(x) > 0 => trough  
+f''(x) < 0 => peak  
+f''(x) = 0 => can be an inflexion  
+
+Let f(x) = 2*x^3 - 9*x^2 + 1  
+Find the critical points  
+
+```{r}
+x = Sym('x')
+f = 2*x^3 - 9*x^2 + 1
+df = deriv(f,x)
+ddf = deriv(df,x)
+```
+
+```{r}
+# Finding the x of the critical points
+Solve(df==0,x)
+# Finding the y of the critical points
+Eval(f,list(x = c(0,3)))
+```
+
+```{r}
+# Determining max or min
+Eval(ddf,list(x = c(0,3)))
+```
+
+Conclusion: (0,1) being maxima; (3,-26) being minima  
+
+```{r}
+plotFun(2*x^3 - 9*x^2 + 1~x)
+```
+
+
+### Global or local maxima / minima  
+
+To get the biggest maxima, we just calculate all the f(x) of the critical points  
+But the greatest maxima may not necessarily mean it is the greatest among f(x)  
+In this way we need to estimate f(x) towards the extremes  
+
+Let f(x) = x^3 - 6*x^2 + 11*x - 6 
+
+```{r}
+f = x^3 - 6*x^2 + 11*x - 6
+df = deriv(f,x); df = Simplify(df); df
+ddf = deriv(df,x); ddf = Simplify(ddf); ddf
+```
+
+```{r}
+# x in critical points
+Solve(df==0,x)
+# y in critical points
+Eval(f,list(x=c((root(12, 2) + 12)/6, (12 - root(12, 2))/6)))
+```
+
+```{r}
+# Max or Min
+Eval(ddf,list(x=c((root(12, 2) + 12)/6, (12 - root(12, 2))/6)))
+```
+
+```{r}
+# Global or Local
+Limit(f,x,Infinity)
+Limit(f,x,-Infinity)
+```
+
+So the critical points are only local maxima and minima  
+
+```{r}
+# Confirmed by graph
+plotFun(x^3 - 6*x^2 + 11*x - 6 ~ x)
+```
+
