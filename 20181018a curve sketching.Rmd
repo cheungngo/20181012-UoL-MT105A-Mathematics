@@ -1,0 +1,61 @@
+---
+title: "20181018a curve sketching"
+author: "cheungngo"
+date: "October 18, 2018"
+output: word_document
+---
+
+###
+
+### Points to note in curve sketching
+
+1. x-intercept (y==0)
+2. y-intercept (x==0)
+3. critical points, and their nature
+4. limiting behaviors (when x getting extreme)
+
+###
+
+Let f(x) = 2*x^3 - 9*x^2 + 1  
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+```{r}
+x = Sym('x')
+f = 2*x^3 - 9*x^2 + 1
+df = deriv(f,x)
+ddf = deriv(df,x)
+```
+
+```{r}
+# 1. x-intercept
+Solve(f==0,x)
+```
+
+This seems difficult for exams  
+So we may seek other ways to draw the graph  
+
+```{r}
+# 3. critical points
+Solve(df==0,x) # critical points at x==0 and x==3
+Eval(ddf,list(x=c(0,3))) # at x==0 it being a peak, at x==3, it being a trough
+Eval(f,list(x=c(0,3))) # y==1 when x==0, y==-26 when x==3
+# At the same time we also get #2 (y-intercept)
+```
+
+```{r}
+# 4. limiting behaviors
+Limit(f,x,Infinity)
+Limit(f,x,-Infinity)
+```
+
+In this way we can sketch the curve without considering the x-intercepts  
+
+```{r}
+# double checking with mosaic
+plotFun(2*x^3 - 9*x^2 + 1 ~ x)
+```
+
