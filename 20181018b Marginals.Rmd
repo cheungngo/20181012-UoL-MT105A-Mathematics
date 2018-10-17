@@ -1,0 +1,39 @@
+---
+title: "20181018b Marginals"
+author: "cheungngo"
+date: "October 18, 2018"
+output: word_document
+---
+
+###
+
+### Principles
+
+Let total cost to be TC(q)    
+For a small change in q, we need to find the increase or decrease in cost, i.e. marginal costs  
+TC'(q) = delta TC / delta q  
+then the marginal costs, i.e. delta TC = TC'(q) * delta q  
+When delta q was not given, and q is large, 1 unit would be comparable to delta q  
+In this way, delta TC = TC'(q)  
+
+### Worked example
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+Let TC(q) == 50000 + 25*q + 0.001*q^2  
+What would be the marginal cost if q = 100 and q = 10000
+
+```{r}
+q = Sym('q')
+f = 50000 + 25*q + 0.001*q^2
+df = deriv(f,q)
+df
+```
+
+```{r}
+# marginal cost
+Eval(df,list(q=c(100,10000)))
+```
