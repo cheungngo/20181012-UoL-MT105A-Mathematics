@@ -1,0 +1,54 @@
+---
+title: "20181019a Integration by parts"
+author: "cheungngo"
+date: "October 19, 2018"
+output: word_document
+---
+
+### Principles
+
+From differentiation, we can get d/dx f(x)g(x) == f'(x)g(x) + g'(x)f(x)  
+Therefore, Int f'(x)g(x) dx + Int g'(x)f(x) dx == f(x)g(x)  
+=> Int f'(x)g(x) dx == f(x)g(x) - Int g'(x)f(x) dx  
+
+### Example
+
+Find Int x ln(x) dx
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+```{r}
+# LHS
+x = Sym('x')
+LHS = Integrate(x*logb(x),x)
+LHS
+```
+
+```{r}
+# RHS
+# Int x*ln(x)dx; f'(x)=x => f(x) = 1/2*x^2; g(x)=ln(x) => g'(x)=1/x
+# Therefore Int x*ln(x) dx can be expressed by:
+# 1/2*x^2 * logb(x) - Int 1/x * 1/2*x^2 dx
+# => 1/2*x^2 * logb(x) - Int x/2 dx
+# => x^2/2 * logb(x) - x^2/4
+```
+
+### Finding Int ln(x) using integration by parts
+
+```{r}
+LHS = Integrate(logb(x),x)
+LHS
+```
+
+```{r}
+# RHS
+# Consider logb(x) = 1*logb(x)
+# Therefore f(x) = x; g(x) = logb(x); g'(x) = 1/x
+# Int logb(x) dx == f(x)g(x) - Int f(x)g'(x) dx
+# => x * logb(x) - Int x (1/x) dx
+# => x * logb(x) - x 
+```
+
