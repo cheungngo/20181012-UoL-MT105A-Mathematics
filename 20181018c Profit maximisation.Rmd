@@ -1,0 +1,61 @@
+---
+title: "20181018c Profit maximisation"
+author: "cheungngo"
+date: "October 18, 2018"
+output: word_document
+---
+
+### Principles
+
+Profit(q) = TR(q) - TC(q)  
+We need to express Profit interms of q, then find the critical points, then the maxima  
+
+### Example  
+
+TC(q) = 1000 + 2*q + 0.06*q^2  
+q + 10*p = 500 (Demand curve)  
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+```{r}
+p = Sym('p'); q = Sym('q')
+Solve(q + 10*p == 500,p) # p in demand curve, in terms of q
+TR = -((q - 500)/10) * q
+TR = Simplify(TR)
+TR
+```
+
+```{r}
+TC = 1000 + 2*q + 0.06*q^2
+Profit = TR - TC
+Profit = Simplify(Profit)
+Profit
+```
+
+```{r}
+dProfit = deriv(Profit,q)
+ddProfit = deriv(dProfit,q)
+Solve(dProfit==0,q)
+Eval(Profit,list(q=c(480/3.2)))
+Eval(ddProfit,list(q=c(480/3.2)))
+```
+
+So the maxima is at q == (480/3.2, 2600)
+
+```{r}
+# The break-even point (when profit first reaches +ve)
+Solve(Profit==0,q)
+N('%')
+Eval(dProfit, list(q=c(22.5245121601, 277.4754878398)))
+```
+
+So the breakeven point would be q == 22.525, when profit first reaches +ve  
+
+```{r}
+# verified with graphs
+plotFun(-1.6 * q^2/10 + 48 * q - 1000 ~ q)
+```
+
