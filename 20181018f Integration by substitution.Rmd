@@ -1,0 +1,68 @@
+---
+title: "20181018f Integration by substitution"
+author: "cheungngo"
+date: "October 18, 2018"
+output: word_document
+---
+
+### Integration by substitution
+
+Find Int (3*x+5)^12 dx:  
+Let u = 3*x+5;  
+du / dx = 3 => dx = du / 3;  
+then it became Int u^12 / 3 du => 1/(13*3) * u^13 = > 1/(13*3) * (3*x+5)^13
+
+### Verified by Ryacas
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+```{r}
+# LHS
+x = Sym('x')
+LHS = Integrate((3*x+5)^12,x)
+LHS
+```
+
+```{r}
+# RHS
+u = 3*x+5
+deriv(u,x)
+dx = Sym('dx'); du = Sym('du')
+Solve(du/dx==3,dx)
+u = Sym('u')
+Integrate(u^12,u) / 3
+intfdu = makeFun(u^13/39~u)
+intfdx = intfdu(u=3*x+5)
+Expand(intfdx)
+```
+
+### More difficult examples
+
+Find Int x^3 * (2*x^2 + 7)^8 dx:
+
+```{r}
+# LHS
+x = Sym('x')
+LHS = Integrate(x^3 * (2*x^2 + 7)^8, x)
+LHS
+```
+
+```{r}
+# RHS
+# Let u = 2*x^2 + 7
+u = 2*x^2 + 7
+deriv(u,x)
+# So that dx = du / (4*x) => 
+# Int x^2 / 4 * u^8 du
+# Consider u = 2*x^2 + 7 => x^2 = (u-7)/2
+# Therefore our integral became (u-7)/8 * u^8
+u = Sym('u')
+Integrate((u-7)/8 * u^8, u)
+intfdu = makeFun(u^10/80 + -7 * u^9/72 ~ u)
+intfdx = intfdu(u=2*x^2 + 7)
+Expand(intfdx)
+```
+

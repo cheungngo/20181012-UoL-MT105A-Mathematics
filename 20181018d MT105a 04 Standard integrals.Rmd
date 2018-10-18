@@ -1,0 +1,44 @@
+---
+title: "20181018d MT105a 04 Standard integrals"
+author: "cheungngo"
+date: "October 18, 2018"
+output: word_document
+---
+
+### Standard integrals
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+### Int x^n == x^(n+1) / (n+1) + c
+
+```{r}
+x = Sym('x')
+Integrate(x^5,x)
+```
+
+### Int 1/x == ln(x) + c
+
+```{r}
+Integrate(1/x,x)
+```
+
+### Int exp(x) == exp(x) + c
+
+```{r}
+Integrate(exp(x),x)
+```
+
+### Int sin(x) == -cos(x) + c
+
+```{r}
+Integrate(sin(x),x)
+```
+
+### Int cos(x) == sin(x) + c
+
+```{r}
+Integrate(cos(x),x)
+```

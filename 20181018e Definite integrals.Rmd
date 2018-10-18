@@ -1,0 +1,35 @@
+---
+title: "20181018e Definite integrals"
+author: "cheungngo"
+date: "October 18, 2018"
+output: word_document
+---
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+### Working by examples
+
+The definite integral of x^4 over [0,1] is:
+
+```{r}
+x = Sym('x')
+Integrate(x^4,x,0,1)
+```
+
+Calculate Int x^2 [0,2]:
+
+```{r}
+Integrate(x^2,x,0,2)
+```
+
+Determine Int exp(t) [-1,1]:
+
+```{r}
+t = Sym('t')
+Integrate(exp(t),t,-1,1)
+N('%')
+```
+
