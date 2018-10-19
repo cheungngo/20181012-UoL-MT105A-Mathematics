@@ -1,0 +1,54 @@
+---
+title: "20181019b partial fractions"
+author: "cheungngo"
+date: "19 October 2018"
+output: word_document
+---
+
+### Partial fractions demonstrated by examples
+
+This is done when the denominator could be factorized  
+
+Find Int x / (x^2 - x - 2) dx  
+
+(Actually the nominator can be many other things other than x)
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+```{r}
+# LHS
+x = Sym('x')
+LHS = Integrate(x / (x^2 - x - 2), x)
+LHS
+```
+
+```{r}
+# RHS
+# Let f(x) == x and g(x) == (x^2 - x - 2)
+# Factorize: x^2 - x - 2 == (x+1)*(x-2)
+# It then becomes x / (x+1)*(x-2)
+# Consider: A1 / (x+1) + A2 / (x-2) == f(x) / g(x);
+# f(x) == A1(x-2) + A2(x+1)
+# In this case, f(x) == x => x == A1(x-2) + A2(x+1)
+# The cover-up rule: let x = 2  and x = -1
+# For x = 2, 2 == A2*3 => A2 = 2/3
+# For x = -1, -1 == A1*-3 => A1 = 1/3
+```
+
+```{r}
+# Consider: A1 / (x+1) + A2 / (x-2) == f(x) / g(x)
+# f(x) / g(x) == 1/(3*(x+1)) + 2/(3*(x-2))
+Integrate(1/(3*(x+1)) + 2/(3*(x-2)),x)
+```
+
+### Summary of the Prinicple
+
+For Int f(x) / g(x) dx;  
+While g(x) factorizable into (x-a1)*(x-a2)  
+f(x) / g(x) == A1/(x-a1) * A2/(x-a2)  
+And f(x) == A1(x-a2) + A2(x-a1)  
+A1 and A2 can thus be found by the 'cover-up' rule  
+And the A1/(x-a1) * A2/(x-a2) can thus be integrated by substitution

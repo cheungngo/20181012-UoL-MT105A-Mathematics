@@ -1,0 +1,37 @@
+---
+title: "20181019c applications of integration"
+author: "cheungngo"
+date: "19 October 2018"
+output: word_document
+---
+
+### Marginal costs and Total costs
+
+Recall in differentiation we calculate the marginal costs from the total costs  
+To apply integration they would simply just give the equation of marginal costs  
+And ask us to integrate that into total costs  
+The only thing matter would be the constant c  
+And that could be derived by considering the fixed costs  
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+Find the total cost function if the marginal cost is q + 5*q^2 + exp(q) and the fixed cost is 10
+
+```{r}
+# Integrating the function
+q = Sym('q')
+Integrate(q + 5*q^2 + exp(q),q)
+```
+
+```{r}
+# Finding 'c'
+# 5 * q^3/3 + q^2/2 + exp(q) + c == 10 when q == 0 (definition of fixed costs)
+Eval(5 * q^3/3 + q^2/2 + exp(q), list(q=0)) # 1
+c = 10 - 1
+TC = 5 * q^3/3 + q^2/2 + exp(q) + 9
+TC
+```
+
