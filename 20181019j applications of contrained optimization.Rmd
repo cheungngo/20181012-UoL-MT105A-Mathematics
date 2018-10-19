@@ -1,0 +1,52 @@
+---
+title: "20181019j applications of contrained optimization"
+author: "cheungngo"
+date: "19 October 2018"
+output: word_document
+---
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+library(manipulate)
+```
+
+### Utility functions
+
+u(x,y) == x^(1/3) * y^(1/2)  
+income M = 40  
+price x = 2, price y = 5  
+i.e. constraint g(x) == 2*x + 5*y - 40 = 0
+
+```{r}
+x = Sym('x')
+y = Sym('y')
+lambda = Sym('lambda')
+L = x^(1/3) * y^(1/2) - lambda*(2*x + 5*y - 40)
+dLx = deriv(L,x); dLx
+dLy = deriv(L,y); dLy
+dLlambda = deriv(L,lambda); dLlambda
+```
+
+```{r}
+Solve(dLx==0,lambda)
+Solve(dLy==0,lambda)
+Solve(0.3333333333 * (x^-0.6666666666 * y^0.5)/2 == x^0.333333333333333 * (0.5 * y^-0.5)/5,x)
+```
+
+Although the computer could not compute,  
+The equality could easily be expressed into:   
+
+##### 1/6 * y == 1/10 * x ==> y == 3*x / 5
+
+```{r}
+Solve(List(y == 3*x / 5, dLlambda == 0),
+      List(x,y))
+```
+
+```{r}
+# Finding Lambda
+Eval(1/3 * (x^(-2/3) * y^0.5)/2, list(x=8,y=24/5))
+```
+
+#### Note that the application of constrained optimization also includes capital costs / output, and raw material costs / output
