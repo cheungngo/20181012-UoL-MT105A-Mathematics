@@ -1,0 +1,67 @@
+---
+title: "20181019f optimization in partial differentiation"
+author: "cheungngo"
+date: "19 October 2018"
+output: word_document
+---
+
+### Principles
+
+Consider F = f(x,y)  
+For critical points, dF/dx == 0 and dF/dy ==0  
+
+For the properties of critical points:  
+Maximum: Fxx*Fyy - Fxy^2 > 0 & Fxx < 0  
+Minimum: Fxx*Fyy - Fxy^2 > 0 & Fxx > 0  
+Saddle: Fxx*Fyy - Fxy^2 < 0  
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+library(manipulate)
+```
+
+##### Consider F = f(x,y) = x^4 + 2*x^2*y + 2*y^2 + 2*y
+
+```{r}
+x = Sym('x')
+y = Sym('y')
+F = x^4 + 2*x^2*y + 2*y^2 + 2*y
+dFx = deriv(F,x)
+dFy = deriv(F,y)
+dFx; dFy
+```
+
+```{r}
+# Need to express y in terms of x by using:
+# dFx-dFy == 0; dFx == 0; dFy == 0
+# (We need 3 equations to solve 2 var)
+Solve(Simplify(dFx-dFy)==0,y)
+Solve(dFy==0,y)
+Solve(dFx==0,y)
+# Then need to solve x using the 3 equations
+Solve(-((2 * x^2 + 2)/4)==-(x^3/x),x)
+Solve(-((2 * x^3 - x^2 - 1)/(2 * x - 2))==-((2 * x^2 + 2)/4),x)
+Solve(-((2 * x^3 - x^2 - 1)/(2 * x - 2))==-(x^3/x),x)
+# solve y using substitution
+Eval(-((2 * x^2 + 2)/4),list(x=c(0,1,-1)))
+```
+
+So that the critical points would be: (0,-0.5), (1,-1), (-1,-1)
+
+```{r}
+ddFxx = deriv(dFx,x)
+ddFyy = deriv(dFy,y)
+ddFxy = deriv(dFx,y)
+Eval(ddFxx*ddFyy - ddFxy^2, list(x=c(0,1,-1),y=c(-0.5,-1,-1)))
+Eval(ddFxx, list(x=c(0,1,-1),y=c(-0.5,-1,-1)))
+```
+
+(0,-0.5) being a saddle point  
+(1,-1) and (-1,-1) being minima  
+
+```{r}
+plotFun(x^4 + 2*x^2*y + 2*y^2 + 2*y ~ x & y, surface = T,
+        xlim = c(-3,3), ylim = c(-3,3))
+```
+

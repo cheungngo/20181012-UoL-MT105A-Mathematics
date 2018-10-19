@@ -1,0 +1,54 @@
+---
+title: "20181019d chain rule"
+author: "cheungngo"
+date: "19 October 2018"
+output: word_document
+---
+
+### the chain rule
+
+There are three functions: f(x,y); x(t); y(t)  
+And we would like to find the derivatives of f(x,y) against t  
+The first method we will be going for would be expressing f(x,y) in terms of t  
+Which would cause alot of manipulations  
+
+The chain rule simplify these calculations:  
+##### d/dt f(x,y) = df(x,y)/dx * dx/dt + df(x,y)/dy * dy/dt
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+f(x,y) = x^2*y  
+x(t) = 3+2*t  
+y(t) = 10-0.2*t  
+
+```{r}
+x = Sym('x'); y = Sym('y'); t = Sym('t')
+f = x^2*y 
+xt = 3+2*t
+yt = 10-0.2*t
+```
+
+```{r}
+# LHS
+fx = makeFun(x^2*y ~ x & y)
+fx_t = fx(x=xt,y=yt)
+LHS = deriv(fx_t,t)
+Simplify(LHS)
+```
+
+```{r}
+# RHS
+dfdx = deriv(f,x)
+dfdy = deriv(f,y)
+dxdt = deriv(xt,t)
+dydt = deriv(yt,t)
+RHS = dfdx*dxdt + dfdy*dydt
+RHS
+RHS_t = makeFun(4 * (x * y) - 0.2 * x^2 ~ x & y)
+RHS = RHS_t(x=xt,y=yt)
+Simplify(RHS)
+```
+

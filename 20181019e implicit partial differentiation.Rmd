@@ -1,0 +1,45 @@
+---
+title: "20181019e implicit partial differentiation"
+author: "cheungngo"
+date: "19 October 2018"
+output: word_document
+---
+
+### Principles
+
+For g(x,y) == constant; theorectically we can express y in terms of x, i.e. finding dy/dx  
+However, most of the time it is difficult to do so  
+In this case, we need to do this implicit partial differentiation:  
+
+dy/dx = - dgdx / dgdy  
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+##### Defined: x^2*y^3 - 6*x^3*y^2 + 2*x*y == 1
+
+```{r}
+# LHS
+x = Sym('x')
+y = Sym('y')
+g_LHS = Solve(x^2*y^3 - 6*x^3*y^2 + 2*x*y == 1,y)
+g_LHS
+# OMG
+```
+
+```{r}
+# RHS
+g = x^2*y^3 - 6*x^3*y^2 + 2*x*y - 1
+dgdx = deriv(g,x)
+dgdy = deriv(g,y)
+RHS = - dgdx / dgdy
+PrettyForm(RHS)
+```
+
+### Extension of the theory
+
+Suppose g(x,y,z) == c  
+dz/dx = -dg/dx / dg/dz;  
+dz/dy = -dg/dy / dg/dz
