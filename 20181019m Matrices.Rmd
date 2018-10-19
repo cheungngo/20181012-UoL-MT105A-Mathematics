@@ -1,0 +1,81 @@
+---
+title: "20181019m Matrices"
+author: "cheungngo"
+date: "19 October 2018"
+output: word_document
+---
+
+### Definition of matrices
+
+```{r}
+A = matrix(c(1,3,2,2,8,9), byrow = T, nrow = 2); A
+```
+
+### Multiplying a matrix with a number
+
+```{r}
+A*3
+```
+
+### Transpose of matrix
+
+```{r}
+t(A)
+```
+
+### Sum of matrices
+
+```{r}
+A = matrix(c(1,2,2,1),ncol = 2); A
+B = matrix(c(3,1,4,2),ncol = 2); B
+A + B
+```
+
+### Multiplication of matrices
+
+By row from left to right, row(i) of first matrix * col(i) of second matrix  
+i.e. number of row depends on the row of first matrix  
+and number of col depends on the col of the second matrix  
+
+a 2x3 %*% 3x2 matrix would thereby give a 2x2 matrix;  
+while a 3x2 %*% 2x3 matrix would give a 3x3 matrix
+
+```{r}
+A = matrix(c(1,3,2,2,3,5),ncol = 3); A
+B = matrix(c(2,0,1,1,-1,2),ncol = 2); B
+C = t(A); C
+D = t(B); D
+```
+
+```{r}
+A %*% B
+C %*% D
+```
+
+### Special matrices
+
+```{r}
+# Diagonal matrix
+E = diag(c(1,2,3)); E
+A; diag(A)
+```
+
+Square matrix: n x n matrix  
+Symmetric matrix: A = t(A)  
+0-matrix and 1-matrix (Note 1-matrix is denoted as J)  
+Identity matrix: 1 on the diagnoal; also note IA = AI = A  
+
+### Inverse of matrices
+
+For a matrix A, a matrix B is said to be an inverse matrix if:  
+AB = BA = I  
+(A must be a square matrix)
+(not all square matrix has an inverse)
+
+```{r}
+A = matrix(c(1,2,3,4),ncol = 2); A
+B = solve(A); B
+A %*% B
+B %*% A
+```
+

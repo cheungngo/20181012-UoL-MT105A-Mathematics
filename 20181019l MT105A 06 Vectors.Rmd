@@ -1,0 +1,59 @@
+---
+title: "20181019l MT105A 06 Vectors"
+author: "cheungngo"
+date: "19 October 2018"
+output: word_document
+---
+
+### Vectors
+
+```{r}
+x = c(1,2,3); x
+```
+
+### Transpose of vectors
+
+```{r}
+t(x)
+```
+
+### Multiplying by a number
+
+```{r}
+7*x
+```
+
+### Sum of vectors
+
+```{r}
+x = c(1,2,3)
+y = c(3,2,1)
+x + y
+```
+
+### Inner product (dot) of vectors
+
+```{r}
+sum(x*y)
+```
+
+### length of a vector
+
+```{r}
+sqrt(sum(x*x))
+```
+
+### 0 vector and 1 vector
+
+```{r}
+rep(0,5)
+rep(1,5)
+```
+
+### Orthogonal vector
+
+Defined by v1 dot v2 = 0
+```{r}
+v1 = c(-1,1); v2 = c(1,1)
+sum(v1*v2)
+```
