@@ -1,0 +1,42 @@
+---
+title: "20181019c MT105A 05 Partial derivatives"
+author: "cheungngo"
+date: "19 October 2018"
+output: word_document
+---
+
+### First and second order partial derivatives
+
+Actually very simple  
+Just treat the other var as constant  
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+#### Let Z = x^2 * y + y^3 * x
+
+```{r}
+y = Sym('y')
+x = Sym('x')
+Z = x^2 * y + y^3 * x
+Zx = deriv(Z,x); Zx
+Zy = deriv(Z,y); Zy
+Zxx = deriv(Zx,x); Zxx
+Zxy = deriv(Zx,y); Zxy
+Zyx = deriv(Zy,x); Zyx
+Zyy = deriv(Zy,y); Zyy
+```
+
+### Graphing functions of two variables
+
+```{r}
+library(manipulate)
+# Required for plotting surface = T
+```
+
+```{r}
+plotFun(x^2 * y + y^3 * x ~ x & y, surface = T)
+```
+
