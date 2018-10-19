@@ -1,0 +1,61 @@
+---
+title: "20181019h application of optimization"
+author: "cheungngo"
+date: "19 October 2018"
+output: word_document
+---
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+library(manipulate)
+```
+
+The cost of a company recruting x junior programmer and y senior programmer:  
+C(x,y) == 2000 + 2*x^3 - 12*x*y + y^2  
+Find the minimum costs and the respective x and y
+
+```{r}
+x = Sym('x')
+y = Sym('y')
+C = 2000 + 2*x^3 - 12*x*y + y^2
+dCx = deriv(C,x); dCx
+dCy = deriv(C,y); dCy
+```
+
+```{r}
+Solve(dCx==0,y)
+Solve(dCy==0,y)
+Solve(dCy-dCx==0,y)
+```
+
+```{r}
+Solve((x^2/2) == (6 * x), x)
+Solve((x^2/2) == (12 * x + 6 * x^2)/14, x)
+Solve((6 * x) == (12 * x + 6 * x^2)/14,x)
+```
+
+```{r}
+Eval(x^2/2,list(x=c(0,12)))
+```
+
+Therefore the two critical points are:  
+(0,0) and (12,72)  
+
+```{r}
+# To confirm that (12,72 is a minimal)
+ddCxx = deriv(dCx,x); ddCxx
+ddCyy = deriv(dCy,y); ddCyy
+ddCxy = deriv(dCx,y); ddCxy
+Eval(ddCxx*ddCyy - ddCxy^2, list(x=c(0,12)))
+Eval(ddCxx, list(x=c(0,12)))
+```
+
+So that (0,0) is a saddle, and (12,72) is a minimum
+
+```{r}
+plotFun(2000 + 2*x^3 - 12*x*y + y^2 ~ x & y,
+        surface = T,
+        xlim = c(-20,20), ylim = c(-100,100))
+```
+
