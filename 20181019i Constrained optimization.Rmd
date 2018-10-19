@@ -1,0 +1,38 @@
+---
+title: "20181019i Constrained optimization"
+author: "cheungngo"
+date: "19 October 2018"
+output: word_document
+---
+
+### The Lagrange multiplier
+
+Suppose f(x,y) is to be optimized subject to a constraint g(x,y) == 0  
+Then we we have to find the critical points in  
+L (x,y,lambda) == f(x,y) - lambda*g(x,y)  
+L is known as the Lagrangean; lambda is known as the Lagrange multiplier
+
+### Example
+
+```{r,message=FALSE}
+library(Ryacas)
+library(mosaic)
+library(manipulate)
+```
+
+f(x) == x^2 + y^2; subject to the constraint x + y == 1;  
+i.e. L == x^2 + y^2 - lambda*(x+y-1)  
+
+```{r}
+x = Sym('x')
+y = Sym('y')
+lambda = Sym('lambda')
+L = x^2 + y^2 - lambda*(x+y-1)
+dLx = deriv(L,x); dLx
+dLy = deriv(L,y); dLy
+dLlambda = deriv(L,lambda); dLlambda
+```
+
+```{r}
+Solve(List(dLx==0,dLy==0,dLlambda==0),List(x,y,lambda))
+```
