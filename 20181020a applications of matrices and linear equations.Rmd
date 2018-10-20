@@ -1,0 +1,73 @@
+---
+title: "20181020a applications of matrices and linear equations"
+author: "cheungngo"
+date: "October 20, 2018"
+output: word_document
+---
+
+### Worked example
+
+supply function qs(p) == a*p^2 + b*p + c  
+
+when p == 1, qs == 5  
+when p == 2, qs == 12  
+when p == 3, qs == 23  
+
+We can therefore transform it into a system of equations:  
+
+a + b + c == 5  
+4*a + 2*b + c == 12  
+9*a + 3*b + c == 23  
+
+#### LHS
+
+```{r, message=FALSE}
+library(Ryacas)
+library(mosaic)
+```
+
+```{r}
+# LHS
+a = Sym('a'); b = Sym('b'); c = Sym('c')
+Solve(List(a + b + c == 5, 4*a + 2*b + c == 12, 9*a + 3*b + c == 23),
+      List(a,b,c))
+```
+
+#### RHS
+
+```{r}
+# RHS
+A = matrix(c(1,4,9,1,2,3,1,1,1,5,12,23),ncol = 4); A
+```
+
+```{r}
+# R2 = R2 - 4*R1
+A[2,] = A[2,] - A[1,]*4; A
+```
+
+```{r}
+# R2 = R2/-2
+A[2,] = A[2,] / -2; A
+```
+
+```{r}
+# R3 = R3 - 9*R1
+A[3,] = A[3,] - 9*A[1,]; A
+```
+
+```{r}
+# R3 = R3 + 6*R2
+A[3,] = A[3,] + 6*A[2,]; A
+```
+
+c == 2;  
+b + (3/2)(2) == 4 => b == 1;  
+a + 1 + 2 == 5 => a == 2  
+
+#### Plotting the supply curve
+
+```{r}
+p = Sym('p')
+plotFun(2*p^2 + p + 2 ~ p, xlim = c(1,5))
+```
+
